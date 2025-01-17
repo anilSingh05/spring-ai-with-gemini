@@ -10,53 +10,48 @@ import java.util.Map;
 @Service
 public class QnAService {
 
+    private final WebClient webClient;
     // Access   to APIKEY  and URL
     @Value("${gemini.ai.api-url}")
     private String geminiApiUrl;
     @Value("${gemini.ai.api-key}")
     private String geminiApikey;
 
-    private final WebClient webClient;
-
     public QnAService(WebClient.Builder webClient) {
         this.webClient = webClient.build();
     }
 
     /**
-     *
      * To  Build Request body
      * Call  Gemini API
      * And send response back
      *
-     *
      * @param question
-     * @return
-     *
+     * @return {
+     * "contents": [
      * {
-     *     "contents": [
-     *         {
-     *             "parts": [
-     *                 {
-     *                     "text": "Explain how AI works"
-     *                 }
-     *             ]
-     *         }
-     *     ]
+     * "parts": [
+     * {
+     * "text": "Explain how AI works"
+     * }
+     * ]
+     * }
+     * ]
      * }
      */
     public String getAnswer(String question) {
 
         // Construct  the request payload
-        Map<String, Object> requestBody =  Map.of("contents", new Object[]{
+        Map<String, Object> requestBody = Map.of("contents", new Object[]{
                 Map.of("parts", new Object[]{
                         Map.of("text", question)
                 })
         });
 
         // Make API  Call
-        String response  = webClient
+        String response = webClient
                 .post()
-                .uri(geminiApiUrl+geminiApikey)
+                .uri(geminiApiUrl + geminiApikey)
                 .header("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                 .bodyValue(requestBody)
                 .retrieve()
@@ -64,6 +59,6 @@ public class QnAService {
                 .block();
 
         // Return response
-        return  response;
+        return response;
     }
 }

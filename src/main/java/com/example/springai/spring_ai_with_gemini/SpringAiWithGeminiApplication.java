@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringAiWithGeminiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringAiWithGeminiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SpringAiWithGeminiApplication.class, args);
+    }
 
 }
